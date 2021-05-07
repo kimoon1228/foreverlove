@@ -1,0 +1,154 @@
+.main{
+    display: grid;
+    grid-template-columns:  1fr 2fr 2fr 1fr 1fr 1fr 20px;
+     grid-template-rows:  1fr 1fr 1fr; 
+    justify-items: center;
+    font-weight: bold;
+    /* align-items: center; */
+}
+.profile {
+    height: 10vh;
+    display: inline-block;
+    position: relative;
+    /* vertical-align: top; */
+    background-color: #646464;
+    margin: 16px 8px 16px 12px;
+}
+.profile_icon{
+    display: inline-block;
+    position: relative;
+}
+.profile_user{
+    display: inline-block;
+    position: relative;
+    color: cornsilk;
+}
+.profile_tier{
+    width: 95px;
+    display: inline-block;
+    position: relative;
+    background-color:#eee;
+}
+.profile_game{
+    width: 95px;
+    display: inline-block;
+    position: relative;
+    background-color:#eee;
+    font-weight: bolder;
+}
+#id_tier{
+    display: inline-block;
+    position: relative;
+    font-weight: bolder;  
+}
+.profile_rank{
+    display: inline-block;
+    position: relative;
+    background-color:#eee;
+    font-weight: bolder;
+}
+.match{
+    position: relative;
+}
+.match_info{
+    height: 120px;
+    display: inline-block;
+    position: relative;
+    background-color:#eee;
+    font-weight: bolder;
+    margin: 5px 5px 5px 5px;
+}
+.match_date{
+    display: inline-block;
+    width: 70px;
+    height: 90px;
+    position: relative;
+    background-color:#eee;
+    font-weight: bolder;
+    margin: 5px 5px 5px 5px;
+}
+.match_ranked{
+    display: inline-block;
+    width: 70px;
+    height: 90px;
+    position: relative;
+    background-color:#eee;
+    font-weight: bolder;
+    font-size: 2em;
+    margin: 5px 5px 5px 5px;
+    vertical-align: top;
+    line-height: 90px;
+}
+.unitinfo{
+    display: inline-block;
+    position: relative;
+    width: 70px;
+    height: 90px;
+    vertical-align: top;
+
+}
+.match_units{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    border: 3px solid;
+    border-radius:5px/5px; 
+    background-size: 60px 60px;
+}
+.unit_stars{
+    width: 50px;
+    height: 10px;
+    position: relative;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.unit_items{
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 10px/10px;
+    background-size:20px 20px;
+}
+.profile_chart{
+    width: 400px;
+    height: 200px;
+}
+.win{
+    width: 35px;
+    height: 30px;
+    position: relative;
+    display: inline-block;
+    background-color:#11b288;
+    font-weight: bolder;
+    border: 1px solid #11b288 ;
+    text-align: center;
+    margin: 5px 5px 5px 5px;
+    border-radius:5px/5px; 
+}
+.mid{
+    width: 35px;
+    height: 30px;
+    position: relative;
+    display: inline-block;
+    background-color:#207ac7;
+    font-weight: bolder;
+    border: 1px solid #207ac7 ;
+    text-align: center;
+    margin: 5px 5px 5px 5px;
+    border-radius:5px/5px; 
+}
+.low{
+    width: 35px;
+    height: 30px;
+    position: relative;
+    display: inline-block;
+    background-color:#d6d6d6;
+    font-weight: bolder;
+    border: 1px solid #d6d6d6 ;
+    text-align: center;
+    margin: 5px 5px 5px 5px;
+    border-radius:5px/5px; 
+}
