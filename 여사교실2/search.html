@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>여사교실</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/search.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/starter-template.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+  </head>
+
+  <body style="background-color: #444;">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="start.html">여사교실</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="start.html">Home</a></li>
+            <li><a href="container.html">덱 배치해보기</a></li>
+          </ul>
+            <form class="navbar-form navbar-right" >
+            <div class="form-group">
+              <input id="id_text" type="text" placeholder="소환사명" class="form-control">
+            </div>
+            <button id="id_btn" type="submit" class="btn btn-success">검색</button>
+          </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="jumbotron">
+      <div class="profile">
+        <div class="profile_icon user_data"></div>
+        <div class="profile_user user_data"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="profile_tier col-md-2 user_data">
+         
+        </div>
+        <div class="profile_game col-md-3 user_data">
+         
+       </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="profile_rank col-md-5 user_data">
+            <div class="game_20"></div>
+        </div>
+        <div class="profile_chart col-md-4 user_data">
+      </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="match col-md-12 user_data">
+            
+        </div>
+
+        </div>
+
+      
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/profile.js"></script>
+    <script src="./js/rank.js"></script>
+      <script>
+        var v_puuid;
+        var v_btn =document.getElementById("id_btn");
+        var v_form= document.getElementById("form1")
+        var v_text = document.getElementById("id_text")
+        var v_userData = document.querySelectorAll(".user_data")
+        var v_profile_chart = document.querySelector(".profile_chart")
+        v_btn.addEventListener("click",function(){
+          for(var i=0; i<v_userData.length; i++){
+            v_userData[i].innerHTML = "";
+          }
+          event.preventDefault();
+          console.log(v_text.value)
+          $.ajax({
+          type:"get", // type 대신 method라고 써도 됨
+                url:"user.php",
+                data:"summonerName="+v_text.value,
+
+                // data:"api_key=RGAPI-8d19bb19-e803-4649-84fe-94a493fc80c7",  // 전송하려는 값
+                success: function(p_arg){
+                  // console.log(p_arg)
+                  var v_rslt = JSON.parse(p_arg)
+                  $("<img>").attr("width",106).attr("height",106)
+                  .attr("src","https://ddragon.leagueoflegends.com/cdn/11.7.1/img/profileicon/"+v_rslt.profileIconId+".png")
+                  .appendTo($(".profile_icon"))
+                  $("<div>").html("<h2>"+v_rslt.name+"</h2>")
+                            .appendTo($(".profile_user"))
+                            .addClass("summoner");
+                  console.log(v_rslt)
+                  $("<div>").html("플레이어레벨 "+v_rslt.summonerLevel)
+                    .appendTo($(".profile_user"))
+                    .addClass("summoner");
+                    v_puuid=v_rslt.puuid;
+                    f_tier(v_rslt.id)// 소환사 아이디 넘겨서 티어 구하기
+                    f_match(v_rslt.puuid)
+                }
+        }) 
+      // 검색 끝
+          
+
+        })
+        // 소환사명 받아서 검색
+        
+
+        function f_matchcount(p_count){
+          $.ajax({
+            type:"get",
+            url:"matchcount.php",
+            data:"puuid="+v_puuid+"&"+"count="+p_count,
+            success:function(p_arg){
+              console.log(p_arg)
+        }
+      })
+    }
+
+      </script>
+   
+
+  </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/ware.js"></script>
+    <script src="./js/item.js"></script>
+    <script src="./js/synerge.js"></script>
+    <link rel="stylesheet" href="./css/deck.css">
+    <style>
+      
+    </style>
+</head>
+<body style="background-color: #464B88">
+    <h1><a href= index.html>여사교실</a></h1>
+    <div id="grid">
+        <div>
+            <ol class ="a"> 
+                <li><a href="#">롤토체스 아이템</a></li>
+                <li><a href="#"> 운영법</a></li>
+            </ol>
+           
+    <ol class ="b">
+        <li><a href="#"> 빌드업</a></li>
+        <li><a href="#"> 빌드업</a></li>
+        <li><a href="#"> 빌드업</a></li>
+    </ol>
+    </ol>
+    </div>
+    <!-- <div id="text">
+    <h2>여사교실</h2> -->
+    <div id ="body">
+    <div id = "bodyTop">  
+    </div>
+    <div id = "bodyBottom"> 
+         <div id = synerge style="border: 1px dotted black;"></div> 
+        <div id = pan></div>
+        <div id = useitem></div>
+        <div id = button> <input type="button" value="이름별" onclick="f_make()">
+            <input type="button" value="가격별" onclick="f_sort()"></div>
+        <div id = "ware">
+           <br>
+        </div>
+        <div id = "item"></div>
+    </div>
+    </div>
+
+    </div>
+</div>
+    <script>
+        function f_makesy(){
+            var basicdiv = document.createElement("div");
+            basicdiv.innerHTML="챔피언을 배치하면 시너지가 활성화 됩니다."
+            basicdiv.setAttribute("id","basicdiv")
+            v_synerge.appendChild(basicdiv)
+        }
+        var bodyBottom = document.getElementById("bodyBottom")
+        var v_can = document.getElementsByClassName("cl_can");
+        var v_pan = document.getElementsByClassName("cl_pan");
+        var v_ware = document.getElementById("ware");
+        var v_unit =document.getElementsByClassName("cl_unit");
+        var v_list =document.getElementsByClassName("item_list");
+        var v_synerge = document.getElementById("synerge");
+        var v_divItem = document.getElementById("item");
+            v_num = 0;
+            // var v_clone =null;
+        function f_pan(){
+            var num =0;
+            var item_num =0;
+            for(var i =0; i<4; i++){
+                var br = document.createElement("div");
+                    br.setAttribute("class","br")
+                for(var j=0; j<7; j++){
+                    var v_div = document.createElement("div");
+                    v_div.style["vertical-align"]="top";
+                    v_div.setAttribute("class","cl_pan");
+                    v_div.ondragover=function(){
+                        event.preventDefault();
+                    }
+                    v_div.ondrop= function (){
+                        event.preventDefault();
+                            var v_id= event.dataTransfer.getData("ngm");
+                            if(event.dataTransfer.getData("new")){
+                                return;     
+                            }
+                            // 배치판 안에서 움직일때
+                            if(event.dataTransfer.getData("ngm1")){
+                                var v_id = event.dataTransfer.getData("ngm1");
+                                this.appendChild(document.getElementById(v_id));
+                            }
+                            // 아이템 넣기
+                            if(event.dataTransfer.getData("item")){
+                                console.log("아이템 받아짐")
+                                if(v_unit.length){
+                                    if(!this.children[0]){
+                                        return alert("아이템을 장착하려면 챔피언을 먼저 배치해주세요")
+                                    }
+                                    if(!this.children[0].children.length){
+                                        var item_list = document.createElement("div");
+                                        item_list.setAttribute("class","item_list");
+                                        item_list.ondragstart =function(){
+                                            event.target.id = "new"
+                                            event.dataTransfer.setData("new",event.target.id)
+                                        }
+                                        this.children[0].appendChild(item_list)
+                                    }
+                                    var v_item = event.dataTransfer.getData("item")
+                                    var v_item_clone=document.getElementById(v_item).cloneNode(true);
+                                    console.log(v_item_clone.title)
+                                    if(v_item_clone.title.substr(0,6) =="도적의 장갑"){
+                                        if(this.children[0].children[0].childElementCount==0){
+                                            v_item_clone.setAttribute("class","inneritem")
+                                            v_item_clone.title+=item_num;
+                                            this.children[0].children[0].appendChild(v_item_clone);
+                                            item_num++;
+                                            return;
+                                        }
+                                        if(this.children[0].children[0].childElementCount>0){
+                                            return alert("도적의 장갑 아이템은 3칸의 슬롯이 필요합니다.")
+                                        }
+                                    }
+                                    v_item_clone.setAttribute("class","inneritem")
+                                    v_item_clone.title+=item_num;                            
+                                    if(this.children[0].children[0].childElementCount>2){
+                                        return alert("아이템은 3개까지만 장착 가능합니다.")
+                                    }
+                                    this.children[0].children[0].appendChild(v_item_clone);
+                                    item_num++;
+                                }else{
+                                    return alert("아이템을 장착하려면 챔피언을 먼저 배치해주세요");
+                                }
+                                return;
+                            } 
+                        var v_clone= document.getElementById(v_id).cloneNode(true);
+                        //판안에 들어간 복사본 아이디 변경
+                        v_clone.setAttribute("class","cl_unit")
+                        v_clone.id= v_num
+                        v_num++;// 들어갈때마다 아이디 값 증가
+                        //한칸당 하나씩..!
+                            
+                       
+                        if(this.children[0]){
+                            this.innerHTML="";
+                            this.appendChild(v_clone)
+                            return
+                        }
+                        this.appendChild(v_clone);
+                        f_synerge(v_clone);
+                        }
+                    v_div.ondragstart = function (){
+                    event.dataTransfer.setData("ngm1",event.target.id);
+                    //배치판 안에서 들때는 아이디를 다르게
+                }
+                    pan.appendChild(v_div); 
+                }
+                pan.appendChild(br)
+            }
+        }
+        window.onload=function(){
+            //챔피언 div 만들기
+             editpic();
+             f_make();
+            //아이템 div 만들기
+            f_itemMake();
+            // 배치판 만들기
+            f_pan();
+            // 시너지판 만들기
+            f_makesy();
+        }
+
+        // 챔피언판에 빼기 함수 적용
+        v_ware.ondragover= function(){
+            event.preventDefault();
+        }
+        v_ware.ondrop = function(){
+            event.preventDefault();
+            if(event.dataTransfer.getData("ngm")){ 
+                return;// 챔피언 판에서 얻은 데이터
+            }
+            if(event.dataTransfer.getData("ngm1")){// 배치판에서 얻어온 데이터
+                var  v_clone =event.dataTransfer.getData("ngm1")
+                f_del(v_clone); 
+            }
+        }
+            //판안에서 빼기
+            function f_del(v_clone){
+                for(var i=0; i<v_pan.length;i++){
+                    if(v_pan[i].children[0]){
+                    if(v_pan[i].children[0].id==v_clone){
+                        v_pan[i].innerHTML=""
+                    }
+                }
+                }
+            }
+            // 챔피언에 들어간 아이템 빼내기
+            v_divItem.addEventListener("dragover",function(){
+                event.preventDefault();
+            })
+            v_divItem.addEventListener("drop",function(){
+                event.preventDefault();
+                if(event.dataTransfer.getData("new")){
+                    var v_data = event.dataTransfer.getData("new");
+                    v_data = document.getElementById(v_data)
+                    for(var i=0; i<v_pan.length; i++){
+                        if(v_pan[i].children[0]){
+                            if(v_pan[i].children[0].children[0]){
+                                for(var j=1; j<=v_pan[i].children[0].children[0].childElementCount; j++){
+                                    var v_eqItem = v_pan[i].children[0].children[0].children[j-1];
+                                    if(v_eqItem.title == v_data.title){
+                                        v_pan[i].children[0].children[0].removeChild(v_eqItem)
+                                        return
+                                    }{
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    return;
+                }
+            })
+            
+
+
+    </script>
+</body>
+</html>
