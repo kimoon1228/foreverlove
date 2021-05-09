@@ -104,7 +104,8 @@
           console.log(v_text.value)
           $.ajax({
           type:"get", // type 대신 method라고 써도 됨
-                url:"https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/"+v_text.value+"?api_key=RGAPI-d43c7977-b06e-4638-9677-448266f87351",
+                url:"user.php",
+            data:"summonerName="+v_text.value,
                
 
                 // data:"api_key=RGAPI-8d19bb19-e803-4649-84fe-94a493fc80c7",  // 전송하려는 값
